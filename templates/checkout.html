@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout - Anni Jewels</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #fffdf9;
+            padding: 30px;
+        }
+        h1 {
+            color: #b98e5a;
+            text-align: center;
+        }
+        form {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ccc;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin-top: 20px;
+            background: #b98e5a;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .summary {
+            margin: 30px auto;
+            max-width: 600px;
+        }
+        .note {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Checkout</h1>
+
+    <div class="summary">
+        <h3>Order Summary</h3>
+        <ul>
+            {% for product in products %}
+                <li>{{ product.name }} - ₹{{ product.price }}</li>
+            {% endfor %}
+        </ul>
+        <p><strong>Total: ₹{{ total }}</strong></p>
+    </div>
+
+    <form method="POST">
+        <label>First Name *</label>
+        <input type="text" name="first_name" required>
+
+        <label>Last Name *</label>
+        <input type="text" name="last_name" required>
+
+        <label>WhatsApp Number *</label>
+        <input type="text" name="whatsapp" required>
+
+        <label>Email *</label>
+        <input type="email" name="email" required>
+
+        <label>Address *</label>
+        <textarea name="address" rows="3" required></textarea>
+
+        <label>Country / Region *</label>
+        <select name="country" required>
+            <option value="">-- Select Country --</option>
+            <option value="India">India</option>
+            <option value="USA">USA</option>
+            <option value="UK">UK</option>
+            <option value="UAE">UAE</option>
+            <!-- Add more if needed -->
+        </select>
+
+        <label>Locality *</label>
+        <input type="text" name="locality" required>
+
+        <label>City *</label>
+        <input type="text" name="city" required>
+
+        <label>State / Province *</label>
+        <input type="text" name="state" required>
+
+        <label>Pincode *</label>
+        <input type="text" name="pincode" required>
+
+        <button type="submit">Continue and Submit</button>
+    </form>
+
+    <div class="note">
+        <strong>Note:</strong><br>
+        * No Cash on Delivery (COD)<br>
+        * Offline Payment Only<br>
+        * We will contact you on WhatsApp for the payment<br>
+        * For any claims, unboxing video is a must
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+<html>
+<head>
+ <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+<h2>Edit Product</h2>
+<form method="post">
+  Name: <input type="text" name="name" value="{{ product.name }}"><br>
+  Price: <input type="number" name="price" value="{{ product.price }}"><br>
+  <button type="submit">Save</button>
+</form>
+</head>
+</html>

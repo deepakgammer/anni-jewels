@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Princess Collection - Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+    <div class="top-right">
+        <a href="{{ url_for('view_cart') }}" class="btn">🛒 View Cart</a>
+    </div>
+
+    <!-- Flash message section -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-message">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <h1>Welcome to Princess Collection</h1>
+
+    <!-- Search bar -->
+    <form method="get" action="{{ url_for('home') }}" style="text-align: center; margin-bottom: 30px;">
+        <input type="text" name="search" placeholder="Search by name or code" value="{{ search or '' }}"
+            style="padding: 10px; width: 300px; border: 1px solid #ccc; border-radius: 6px;">
+        <button type="submit" class="btn">Search</button>
+    </form>
+
+    <!-- Product grid -->
+    <div class="product-grid">
+        {% if products %}
+            {% for product in products %}
+            <div class="card">
+                <img src="{{ url_for('static', filename='uploads/' + product.image) }}" alt="{{ product.name }}">
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description }}</p>
+                <p><strong>₹{{ product.price }}</strong></p>
+                <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="POST">
+                    <input class="qty-input" type="number" name="quantity" value="1" min="1">
+                    <button type="submit" class="btn">Add to Cart</button>
+                </form>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p style="text-align:center; color: #b30000; font-size: 1.2em; font-weight: bold;">
+                ❌ No products found for your search.
+            </p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Cart - Princess Collection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #fdf6f0;
+        }
+        h1 {
+            color: #b98e5a;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        img {
+            border-radius: 10px;
+        }
+        .btn {
+            background-color: #b98e5a;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .update-btn {
+            margin-top: 8px;
+            background-color: #777;
+        }
+        .total {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .checkout {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 16px;
+            background-color: #b98e5a;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+        .qty-input {
+            width: 60px;
+            padding: 5px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🛒 Your Cart</h1>
+
+    {% if products %}
+        <ul>
+            {% for product in products %}
+            <li>
+                <img src="{{ url_for('static', filename='uploads/' + product.image) }}" width="100">
+                <div>
+                    <strong>{{ product.name }}</strong><br>
+                    <form action="{{ url_for('update_quantity', product_id=product.id) }}" method="POST">
+                        Quantity:
+                        <input class="qty-input" type="number" name="quantity" min="1" value="{{ quantities[product.id|string] }}">
+                        <button type="submit" class="btn update-btn">Update</button>
+                    </form>
+                    Unit Price: ₹{{ product.price }}<br>
+                    Total: ₹{{ product.price * quantities[product.id|string] }}
+                </div>
+                <a href="{{ url_for('remove_from_cart', product_id=product.id) }}" class="btn">Remove</a>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <p class="total">Total: ₹{{ total }}</p>
+        <a href="{{ url_for('checkout') }}" class="checkout">Proceed to Checkout</a>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+
+</body>
+</html>
